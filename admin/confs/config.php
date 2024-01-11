@@ -2,19 +2,18 @@
 
 class DB
 {
-    public static $pdo;
+    public $host = "localhost";
+    public $dbname = "Online_Book_Store";
+    public $user = "kyawmgmgthu";
+    public $password = "kyawmgmgthu789";
+    public $pdo;
 
-    public static function connect()
+    public function __construct()
     {
         try {
-            $dbhost = "localhost";
-            $dbuser = "kyawmgmgthu";
-            $dbpass = "kyawmgmgthu789";
-            $dbname = "Online_Book_Store";
-
-            $pdo = new PDO("mysql:host=$dbhost; dbname=$dbname", $dbuser, $dbpass);
+            $pdo = new PDO("mysql:host=$this->host;dbname=$this->dbname", $this->user, $this->password);
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            self::$pdo = $pdo;
+            $this->pdo = $pdo;
         } catch (PDOException $e) {
             echo $e->getMessage();
         }

@@ -1,6 +1,6 @@
 <?php
-require_once "../controller/ProductController.php";
-$controller = new ProductController();
+require_once "../controller/CategoriesController.php";
+$controller = new CategoriesController();
 $categories = $controller->index();
 ?>
 <!DOCTYPE html>
