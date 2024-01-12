@@ -1,5 +1,6 @@
 <?php
+
 require_once "../controller/CategoriesController.php";
 
-$connect = new CategoriesController();
-$connect->update($_GET['id'], $_POST);
+$controller = new CategoriesController();
+$controller->update($_GET['id'], $_POST);

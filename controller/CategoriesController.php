@@ -24,7 +24,7 @@ class CategoriesController extends DB
 
 
             if ($statement->execute()) {
-                header("location: localhost:8000/admin/cat-list.php");
+                header("location: http://localhost:8000/admin/cat-list.php");
             } else {
                 throw new Exception("Error while creating a new product!");
             }
@@ -55,14 +55,14 @@ class CategoriesController extends DB
             $statement = $this->pdo->prepare("
                UPDATE categories
                SET 
-               `name` = :name, `remark` = :remark
+               `name` = :name, `remark` = :remark, modified_date = now()
                WHERE id = :id
             ");
-
-            $statement->bindParam("id", $id);
-            $statement->bindParam("name", $request["remark"]);
+            $statement->bindParam(":id", $id);
+            $statement->bindParam("name", $request["name"]);
+            $statement->bindParam("remark", $request["remark"]);
             if ($statement->execute()) {
-                header("Location: localhost:8000/admin/cat-list.php");
+                header("Location: http://localhost:8000/admin/cat-list.php");
             } else {
                 throw new Exception("Error while updating a new product!");
             }
@@ -78,7 +78,7 @@ class CategoriesController extends DB
             ");
             $statement->bindParam(":id", $id);
             if ($statement->execute()) {
-                header("location: localhost:8000/admin/cat-list.php");
+                header("location: http://localhost:8000/admin/cat-list.php");
             } else {
                 throw new Exception("Error while creating a new product!");
             }

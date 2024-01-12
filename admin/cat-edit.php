@@ -3,6 +3,7 @@ require_once "../controller/CategoriesController.php";
 
 $controller = new CategoriesController();
 
+
 $categories = $controller->edit($_GET["id"]);
 ?>
 <!DOCTYPE html>
@@ -18,16 +19,16 @@ $categories = $controller->edit($_GET["id"]);
 
 <body>
     <h1 class="mt-3 text-center">Edit Category</h1>
-    <form action="cat.update.php?id=<?php $categories->id; ?>" method="post">
+    <form action="cat-update.php?id=<?php echo $categories->id; ?>" method="POST">
         <div class="form-group m-5 p-5 bg-light">
             <label for="name" class="mt-2">Category Name</label>
             <input type="text" name="name" id="name" value="<?php echo $categories->name; ?>">
 
             <label for="remark" class="mt-2">Remark</label>
-            <textarea name="remark" id="remark" value="<?php echo $categories->remark; ?>"></textarea>
+            <textarea name="remark" id="remark"><?php echo $categories->remark; ?></textarea>
 
             <br><br>
-            <input type=" submit" value="Update Category" class="btn btn-dark">
+            <button type="submit" class="btn btn-dark">Update Category</button>
         </div>
     </form>
 
