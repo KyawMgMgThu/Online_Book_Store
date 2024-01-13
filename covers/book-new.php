@@ -1,5 +1,6 @@
 <?php
 require_once "../controller/CategoriesController.php";
+require_once "../controller/BookController.php";
 $controller = new CategoriesController();
 $categories = $controller->index();
 ?>
@@ -48,3 +49,5 @@ $categories = $controller->index();
 
     </form>
 </body>
+
+</html>

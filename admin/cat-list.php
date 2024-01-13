@@ -21,7 +21,7 @@ $categories = $controller->index();
 
                 <h3><?php echo $category->name; ?></h3>
                 <p><?php echo $category->remark; ?></p>
-                <a href="cat-del.php?id=<?php echo $category->id; ?>" class="btn btn-danger">del</a>
+                <a href="cat-del.php?id=<?php echo $category->id; ?>" class="btn btn-danger">delete</a>
                 <a href="cat-edit.php?id=<?php echo $category->id; ?>" class="btn btn-dark">edit</a>
             </li>
         <?php endforeach; ?>
