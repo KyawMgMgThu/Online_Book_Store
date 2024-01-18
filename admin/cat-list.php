@@ -13,20 +13,27 @@ $categories = $controller->index();
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 </head>
-<h1 class="text-center">Category List</h1>
-<div class="from-group m-5 bg-light p-5">
+<ul class="nav nav-pills mb-3 p-3 bg-dark btn-danger">
+    <li class="nav-item"><a class="nav-link text-light" href="../covers/book-list.php ">Manage Books</a></li>
+    <li class="nav-item"><a class="nav-link active  text-light" href="../admin/cat-list.php">Manage Categories</a></li>
+    <li class="nav-item"><a class="nav-link text-light" href="orders.php">Manage Orders</a></li>
+    <li class="nav-item"><a class="nav-link text-light" href="logout.php">Logout</a></li>
+</ul>
+<a href="cat-new.php" class="btn btn-primary ml-5 mb-1">New Category</a>
+<div class="from-group ml-5 mr-5 bg-light">
+    <h1 class="text-center pt-3">CATEGORY LIST</h1>
     <ul>
         <?php foreach ($categories as $category) : ?>
             <li title="<?php echo $category->remark; ?>" class="m-3">
 
                 <h3><?php echo $category->name; ?></h3>
-                <p><?php echo $category->remark; ?></p>
+                <p class="text-secondary"><?php echo $category->remark; ?></p>
                 <a href="cat-del.php?id=<?php echo $category->id; ?>" class="btn btn-danger">delete</a>
                 <a href="cat-edit.php?id=<?php echo $category->id; ?>" class="btn btn-dark">edit</a>
             </li>
         <?php endforeach; ?>
     </ul>
-    <a href="cat-new.php" class="btn btn-dark">New Category</a>
+
 </div>
 
 <body>

@@ -47,4 +47,70 @@ class BookController extends DB
             echo $e->getMessage();
         }
     }
+
+    public function edit($id)
+    {
+        try {
+            $statement = $this->pdo->prepare("select*from books where id = :id");
+            $statement->bindParam(":id", $id);
+            if ($statement->execute()) {
+                $books = $statement->fetch(PDO::FETCH_OBJ);
+                $categories = $this->pdo->query("select * from categories")->fetchAll(PDO::FETCH_OBJ);
+                $result = ["books" => $books, "categories" => $categories];
+                return $result;
+            } else {
+                throw new Exception("Error");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function update($id, $request, $files)
+    {
+        try {
+            $cover = $files['cover']['name'];
+            $tmp = $files['cover']['tmp_name'];
+
+            if ($cover) {
+                move_uploaded_file($tmp, "cover/$cover");
+            }
+            $statement = $this->pdo->prepare("
+                update books
+                set
+                `title` = :title, `author` = :author, `summary` = :summary, `price` = :price, `category_id` = :category_id, `cover` = :cover
+                where id=:id
+            ");
+
+            $statement->bindParam("id", $id);
+            $statement->bindParam(":title", $request["title"]);
+            $statement->bindParam(":author", $request["author"]);
+            $statement->bindParam(":summary", $request["summary"]);
+            $statement->bindParam(":price", $request["price"]);
+            $statement->bindParam(":category_id", $request["category_id"]);
+            $statement->bindParam(":cover", $cover);
+            if ($statement->execute()) {
+                header("Location: http://localhost:8000/covers/book-list.php");
+            } else {
+                throw new Exception("Error while updating a new product!");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
+    public function destory($id)
+    {
+        try {
+            $statement = $this->pdo->prepare("
+                delete from books where id = :id;
+            ");
+            $statement->bindParam(":id", $id);
+            if ($statement->execute()) {
+                header("Location: http://localhost:8000/covers/book-list.php");
+            } else {
+                throw new Exception("Error while updating a new product!");
+            }
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
+    }
 }
