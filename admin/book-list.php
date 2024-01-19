@@ -1,4 +1,5 @@
 <?php
+include("./confs/auth.php");
 require_once "../controller/BookController.php";
 $controller = new BookController();
 $categories = $controller->index();
@@ -17,7 +18,7 @@ $categories = $controller->index();
 <body>
     <ul class="nav nav-pills mb-3 p-3 bg-dark btn-danger">
         <li class="nav-item"><a class="nav-link active text-light" href="book-list.php ">Manage Books</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="../admin/cat-list.php">Manage Categories</a></li>
+        <li class="nav-item"><a class="nav-link text-light" href="cat-list.php">Manage Categories</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="orders.php">Manage Orders</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="logout.php">Logout</a></li>
     </ul>

@@ -1,12 +1,9 @@
 <?php
-
+include("./confs/auth.php");
+require_once "../controller/CategoriesController.php";
 require_once "../controller/BookController.php";
-$controller =  new BookController();
-
-
-$categories = $controller->edit($_GET["id"])["categories"];
-
-$books = $controller->edit($_GET["id"])["books"];
+$controller = new CategoriesController();
+$categories = $controller->index();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,31 +18,28 @@ $books = $controller->edit($_GET["id"])["books"];
 </head>
 
 <body>
-    <h1 class="mt-3 text-center">Update Book</h1>
-    <form action="book-update.php?id=<?php echo $books->id; ?>" method="post" enctype="multipart/form-data">
+    <h1 class="mt-3 text-center">New Book</h1>
+    <form action="book-add.php" method="post" enctype="multipart/form-data">
         <div class="form-group m-5 p-5 bg-light">
             <label for="title" class="mt-2">Book Title</label>
-            <input class="form-control" type="text" name="title" id="title" value="<?php echo $books->title; ?>">
+            <input class="form-control" type="text" name="title" id="title">
 
             <label for="author" class="mt-2">Author</label>
-            <input class="form-control" type="text" name="author" id="author" value="<?php echo $books->author; ?>">
+            <input class="form-control" type="text" name="author" id="author">
 
             <label for="summary" class="mt-2">Summary</label>
-            <textarea class="form-control" name="summary" id="summary"><?php echo $books->summary; ?></textarea>
+            <textarea class="form-control" name="summary" id="summary"></textarea>
 
             <label for="price" class="mt-2">Price</label>
-            <input class="form-control mb-3" type="text" name="price" id="price" value="<?php echo $books->price; ?>">
+            <input class="form-control mb-3" type="text" name="price" id="price">
 
             <label for="categories" class="mt-2">Category</label>
-            <select name="category_id" id="category_id">
+            <select name="category_id" id="categories">
                 <option value="0">--Choose--</option>
                 <?php foreach ($categories as $category) : ?>
-                    <option value="<?php echo $category->id ?>" <?php if ($books->category_id == $category->id) {
-                                                                    echo "selected";
-                                                                } ?>><?php echo $category->name; ?></option>
+                    <option value="<?php echo $category->id ?>"><?php echo $category->name ?></option>
                 <?php endforeach; ?>
             </select>
-            <img src="./cover/<?php echo $books->covers; ?>" alt="" height="150">
             <label for="cover" class="mt-2">Cover</label>
             <input type="file" name="cover" id="cover">
             <br><br>

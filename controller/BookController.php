@@ -39,7 +39,7 @@ class BookController extends DB
             $statement->bindParam(":cover", $cover);
 
             if ($statement->execute()) {
-                header("Location: http://localhost:8000/covers/book-list.php");
+                header("Location: http://localhost:8000/admin/book-list.php");
             } else {
                 throw new Exception("Error while creating a new product!");
             }
@@ -89,7 +89,7 @@ class BookController extends DB
             $statement->bindParam(":category_id", $request["category_id"]);
             $statement->bindParam(":cover", $cover);
             if ($statement->execute()) {
-                header("Location: http://localhost:8000/covers/book-list.php");
+                header("Location: http://localhost:8000/admin/book-list.php");
             } else {
                 throw new Exception("Error while updating a new product!");
             }
@@ -105,7 +105,7 @@ class BookController extends DB
             ");
             $statement->bindParam(":id", $id);
             if ($statement->execute()) {
-                header("Location: http://localhost:8000/covers/book-list.php");
+                header("Location: http://localhost:8000/admin/book-list.php");
             } else {
                 throw new Exception("Error while updating a new product!");
             }
