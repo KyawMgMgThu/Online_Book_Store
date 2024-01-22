@@ -31,7 +31,7 @@ $categories = $controller->index();
             <h1 class="mt-2 text-center">BOOK LIST</h1>
             <?php foreach ($categories as $category) : ?>
                 <li class="list-group-item mb-1">
-                    <img src="./cover/<?php echo $category->cover; ?>" class="m-2" alt="" align="right" height="140">
+                    <img src="../covers/cover/<?php echo $category->cover; ?>" class="m-2" alt="" align="right" height="140">
                     <b class="text-uppercase"><?php echo $category->title; ?></b>
                     <i>by <b><?php echo $category->author; ?></b></i>
                     <small class="ml-2">(in <?php echo $category->name; ?>)</small>

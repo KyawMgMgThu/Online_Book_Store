@@ -1,9 +1,10 @@
 <?php
 session_start();
-include("../Online_Book_Store/admin/confs/auth.php");
+include("./admin/confs/auth.php");
 require_once "./controller/ShoppingCartController.php";
 $controller = new ShoppingCartController();
 $carts = $controller->Cart();
+$categories = $controller->getCategories();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -17,26 +18,49 @@ $carts = $controller->Cart();
 </head>
 
 <body>
-    <h1>Book Store</h1>
-    <div class="">
-        <a href="view-cart.php">
-            <?php echo $carts ?> book in your cart
+
+    <div class="btn btn-dark ml-5 mt-3">
+        <a href="view-cart.php" class="text-white">
+            <?php echo count($carts) ?> book in your cart
         </a>
     </div>
-    <div>
-        <ul>
-            <li>
-                <b><a href="index.php">All Categories</a></b>
-            </li>
+    <form action="" class="form-group bg-light ml-5 mr-5">
+        <h1 class="mt-2 text-center">BOOK STORE</h1>
+        <div class="text-secondary ">
+            <ul>
+                <li>
+                    <b><a href="index.php">All Categories</a></b>
+                </li>
+                <?php
+                foreach ($categories as $cart) : ?>
+                    <li>
+                        <a href="index.php?cat=<?php echo $cart->id; ?>">
+                            <?php echo $cart->name; ?>
+                        </a>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </form>
+    <div class="mt-5">
+        <ul class="">
             <?php
             foreach ($carts as $cart) : ?>
                 <li>
-                    <a href="index.php?cat=<?php echo $cart->id; ?>">
-                        <?php echo $cart->name; ?>
-                    </a>
+                    <img src="./covers/cover/<?php echo $cart->cover; ?>" alt="" height="150">
+                    <b>
+                        <a href="book-detail.php?id=<?php echo $cart->id; ?>">
+                            <?php echo $cart->title; ?>
+                        </a>
+                    </b>
+                    <i><?php echo $cart->price; ?></i>
+                    <a href="add-cart.php?id=<?php echo $cart->id ?>">Add to Cart</a>
                 </li>
             <?php endforeach; ?>
         </ul>
+    </div>
+    <div class="footer">
+        &copy; <?php echo date("Y") ?>. All right reserved.
     </div>
 </body>
 

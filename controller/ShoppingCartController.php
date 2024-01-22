@@ -21,9 +21,13 @@ class ShoppingCartController extends DB
         } else {
             $statement = $this->pdo->query("select * from books");
             $books = $statement->fetchAll(PDO::FETCH_OBJ);
+            return $books;
         }
-        $statement = $this->pdo->query("select * from categories");
-        $cats = $statement->fetchAll(PDO::FETCH_OBJ);
-        return $cats;
+    }
+
+    public function getCategories()
+    {
+        $cats = $this->pdo->query("select * from categories");
+        return $cats->fetchAll(PDO::FETCH_OBJ);
     }
 }
