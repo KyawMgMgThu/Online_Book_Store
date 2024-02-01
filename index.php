@@ -3,6 +3,12 @@ session_start();
 include("./admin/confs/auth.php");
 require_once "./controller/ShoppingCartController.php";
 $controller = new ShoppingCartController();
+$cartCount = 0;  // Use a different variable name for the count
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $qty) {
+        $cartCount += $qty;
+    }
+}
 $carts = $controller->Cart();
 $categories = $controller->getCategories();
 ?>
@@ -59,7 +65,7 @@ $categories = $controller->getCategories();
         </div>
         <div class="navbar-text">
             <a class="text-white btn btn-success" href="view-cart.php">
-                <?php echo count($carts) ?> book(s) in your cart
+                <?php echo $cartCount ?> book(s) in your cart
             </a>
         </div>
     </nav>

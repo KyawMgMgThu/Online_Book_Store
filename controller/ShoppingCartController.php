@@ -6,13 +6,6 @@ class ShoppingCartController extends DB
 {
     public function Cart()
     {
-        $cart = 0;
-
-        if (isset($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $qty) {
-                $cart += $qty;
-            }
-        }
 
         if (isset($_GET['cat'])) {
             $cat_id = $_GET['cat'];
