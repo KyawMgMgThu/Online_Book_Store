@@ -1,5 +1,8 @@
 <?php
 include("./confs/auth.php");
+require_once "../controller/OrderController.php";
+$controller = new OrderController();
+$order = $controller->all();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,6 +21,33 @@ include("./confs/auth.php");
         <li class="nav-item"><a class="nav-link text-light" href="cat-list.php">Manage Categories</a></li>
         <li class="nav-item"><a class="nav-link active text-light" href="orders.php">Manage Orders</a></li>
         <li class="nav-item"><a class="nav-link text-light" href="logout.php">Logout</a></li>
+    </ul>
+    <ul>
+        <?php foreach ($order as $orders) : ?>
+            <?php if ($orders['status']) : ?>
+                <li class="delivered">
+                <?php else : ?>
+                <li>
+                <?php endif; ?>
+
+                <div class="order">
+                    <b><?php echo $orders['name'] ?></b>
+                    <i><?php echo $orders['email'] ?></i>
+                    <span><?php echo $orders['phone'] ?></span>
+                    <p><?php echo $orders['address'] ?></p>
+
+                    <?php if ($orders['status']) : ?>
+                        * <a href="order-status.php?id=<?php echo $orders['id'] ?>&status=0">Undo</a>
+                    <?php else : ?>
+                        * <a href="order-status.php?id=<?php echo $orders['id'] ?>&status=1">Mark as Delivered</a>
+                    <?php endif; ?>
+                </div>
+                <div class="items">
+
+                </div>
+                </li>
+                </li>
+            <?php endforeach; ?>
     </ul>
 </body>
 
