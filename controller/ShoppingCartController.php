@@ -1,5 +1,4 @@
 <?php
-session_start();
 require_once __DIR__ . "/../admin/confs/config.php";
 
 class ShoppingCartController extends DB

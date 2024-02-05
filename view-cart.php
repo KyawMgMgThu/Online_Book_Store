@@ -1,12 +1,14 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['cart'])) {
     header("location: http://localhost:8000/index.php");
     exit();
 }
+include("./admin/confs/config.php");
 $total = 0;
 
-include("./admin/confs/config.php");
+
 require_once "./controller/ShoppingCartController.php";
 
 $controller = new ShoppingCartController();

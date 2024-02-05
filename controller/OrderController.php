@@ -24,7 +24,7 @@ class OrderController extends DB
         $statement->execute();
     }
 
-    public function order_item($order_id, $request)
+    public function order_item($order_id)
     {
         if (isset($_SESSION['cart']) && is_array($_SESSION['cart'])) {
             $statement = $this->pdo->prepare("
@@ -39,6 +39,21 @@ class OrderController extends DB
                 $statement->bindParam(":qty", $qty);
                 $statement->execute();
             }
+        }
+    }
+    public function finishorder($id, $status)
+    {
+        $statement = $this->pdo->prepare("
+        UPDATE orders SET 
+        status= :status, modified_date = now() WHERE id = :id
+        ");
+
+        $statement->bindParam(":status", $status);
+        $statement->bindParam(":id", $id);
+        if ($statement->execute()) {
+            header("Location: http://localhost:8000/admin/orders.php");
+        } else {
+            throw new Exception("Error while updating a new product!");
         }
     }
 }

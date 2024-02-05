@@ -3,7 +3,7 @@ session_start();
 include("./admin/confs/auth.php");
 require_once "./controller/ShoppingCartController.php";
 $controller = new ShoppingCartController();
-$cartCount = 0;  // Use a different variable name for the count
+$cartCount = 0;
 if (isset($_SESSION['cart'])) {
     foreach ($_SESSION['cart'] as $qty) {
         $cartCount += $qty;

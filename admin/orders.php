@@ -1,8 +1,12 @@
 <?php
+
 include("./confs/auth.php");
 require_once "../controller/OrderController.php";
-$controller = new OrderController();
-$order = $controller->all();
+require_once "../controller/ShoppingCartController.php";
+
+$controller = new ShoppingCartController();
+$orders = new OrderController();
+$order = $orders->all();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,39 +20,54 @@ $order = $controller->all();
 </head>
 
 <body>
-    <ul class="nav nav-pills mb-3 p-3 bg-dark btn-danger">
-        <li class="nav-item"><a class="nav-link  text-light" href="book-list.php ">Manage Books</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="cat-list.php">Manage Categories</a></li>
-        <li class="nav-item"><a class="nav-link active text-light" href="orders.php">Manage Orders</a></li>
-        <li class="nav-item"><a class="nav-link text-light" href="logout.php">Logout</a></li>
-    </ul>
-    <ul>
-        <?php foreach ($order as $orders) : ?>
-            <?php if ($orders['status']) : ?>
-                <li class="delivered">
-                <?php else : ?>
-                <li>
-                <?php endif; ?>
+    <div class="container">
+        <h2 class="mt-3">Manage Orders</h2>
 
-                <div class="order">
-                    <b><?php echo $orders['name'] ?></b>
-                    <i><?php echo $orders['email'] ?></i>
-                    <span><?php echo $orders['phone'] ?></span>
-                    <p><?php echo $orders['address'] ?></p>
+        <table class="table mt-4">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Customer Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Phone</th>
+                    <th scope="col">Address</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($order as $order) : ?>
+                    <tr>
+                        <td><?php echo $order->name; ?></td>
+                        <td><?php echo $order->email; ?></td>
+                        <td><?php echo $order->phone; ?></td>
+                        <td><?php echo $order->address; ?></td>
+                        <td><?php echo $order->status ? 'Delivered' : 'Pending'; ?></td>
+                        <td>
+                            <?php if ($order->status) : ?>
+                                <a href="order-status.php?id=<?php echo $order->id ?>&status=0">Undo</a>
+                            <?php else : ?>
+                                <a href="order-status.php?id=<?php echo $order->id ?>&status=1">Mark as Delivered</a>
+                            <?php endif; ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            <strong>Ordered Items:</strong>
+                            <?php foreach ($_SESSION['cart'] ?? [] as $id => $qty) : ?>
+                                <?php $cart = $controller->book_detail($id); ?>
 
-                    <?php if ($orders['status']) : ?>
-                        * <a href="order-status.php?id=<?php echo $orders['id'] ?>&status=0">Undo</a>
-                    <?php else : ?>
-                        * <a href="order-status.php?id=<?php echo $orders['id'] ?>&status=1">Mark as Delivered</a>
-                    <?php endif; ?>
-                </div>
-                <div class="items">
+                                <b>
+                                    <a href="../book-detail.php?id=<?php echo $cart->book_id; ?>"><?php echo $cart->title; ?></a>
+                                    <?php echo $cart->qty; ?>
+                                </b>
+                            <?php endforeach; ?>
 
-                </div>
-                </li>
-                </li>
-            <?php endforeach; ?>
-    </ul>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
 </body>
 
 </html>

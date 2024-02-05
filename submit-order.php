@@ -4,7 +4,8 @@ include("./admin/confs/config.php");
 require_once "./controller/OrderController.php";
 $order = new OrderController();
 $order->order($_POST);
-$order->order_item($_GET["id"], $_POST);
+$order_id = isset($_GET["id"]) ? $_GET["id"] : null;
+$order->order_item($order_id);
 unset($_SESSION['cart']);
 ?>
 
